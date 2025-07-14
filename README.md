@@ -14,3 +14,11 @@ An XIAO RP2040 6 Key Macro pad with a Rotary Encoder that uses KMK for firmware
 
 ## CAD
 <img width="1920" height="1032" alt="CAD" src="https://github.com/user-attachments/assets/b18c3d60-817c-43fe-90bc-cde4277cb6ca" />
+
+
+## BOM
+- 6x Cherry MX Switches
+- 1x XIAO RP2040
+- 1x EC11 Rotary Encoder
+- 4x M3x16 Bolt
+- 4x M3 Heatset
