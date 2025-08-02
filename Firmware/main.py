@@ -1,51 +1,55 @@
-# You import all the IOs of your board
+# I am aware that one direction of the knob does not work, I am unsure on how to fix this, please make a PR if you find out how.
+
 import board
 
-# These are imports from the kmk library
 from kmk.kmk_keyboard import KMKKeyboard
 from kmk.scanners.keypad import KeysScanner
 from kmk.keys import KC
-from kmk.modules.macros import Press, Release, Tap, Macros
+from kmk.modules.macros import Macros, Press, Tap, Release
 from kmk.modules.encoder import EncoderHandler
+from kmk.extensions.media_keys import MediaKeys
 
-# This is the main instance of your keyboard
 keyboard = KMKKeyboard()
 
-# Add the macro extension
 macros = Macros()
 encoder_handler = EncoderHandler()
-keyboard.modules.append(macros)
-keyboard.modules = [layers, holdtap, encoder_handler]
+keyboard.modules = [macros, encoder_handler]
+keyboard.extensions.append(MediaKeys())
 
-# Define your pins here!
-PINS = [board.D2, board.D4, board.D6, board.D1, board.D5, board.D3]
+PINS = [board.D2, board.D4, board.D6, board.D1, board.D5, board.D3, board.D9]
 
-# Tell kmk we are not using a key matrix
 keyboard.matrix = KeysScanner(
     pins=PINS,
     value_when_pressed=False,
 )
-encoder_handler.pins = (
-    (board.D8, board.D7, board.D9)
-    )
+encoder_handler.pins = ((board.D8, board.D7),)
 
-# Here you define the buttons corresponding to the pins
+
 # Look here for keycodes: https://github.com/KMKfw/kmk_firmware/blob/main/docs/en/keycodes.md
 # And here for macros: https://github.com/KMKfw/kmk_firmware/blob/main/docs/en/macros.md
+print(KC.Macro)
+
 
 keyboard.keymap = [
-    [KC.Macro(Press(KC.LCTL), Tap(KC.A), Release(KC.LCTL)),
-     KC.Macro(Press(KC.LCTL), Tap(KC.X), Release(KC.LCTL)),
-     KC.Macro(Press(KC.LCTL), Tap(KC.C), Release(KC.LCTL)),
-     KC.Macro(Press(KC.LCTL), Tap(KC.S), Release(KC.LCTL)),
-     KC.Macro(Press(KC.LCTL), Tap(KC.Z), Release(KC.LCTL)),
-     KC.Macro(Press(KC.LCTL), Tap(KC.Y), Release(KC.LCTL)),]
+    [
+        KC.MACRO(Press(KC.LCTL), Tap(KC.A), Release(KC.LCTL)),
+        KC.MACRO(Press(KC.LCTL), Tap(KC.X), Release(KC.LCTL)),
+        KC.MACRO(Press(KC.LCTL), Tap(KC.C), Release(KC.LCTL)),
+        KC.MACRO(Press(KC.LCTL), Tap(KC.S), Release(KC.LCTL)),
+        KC.MACRO(Press(KC.LCTL), Tap(KC.Z), Release(KC.LCTL)),
+        KC.MACRO(Press(KC.LCTL), Tap(KC.Y), Release(KC.LCTL)),
+        KC.MACRO(Tap(KC.MUTE)),
+    ]
 ]
 
-encoder_handler.map = [((KC.UP, KC.DOWN, KC.MUTE),)]
+encoder_handler.map = [
+    [ [KC.VOLU], [KC.VOLD] ]
+]
 
-# Start kmk!
+
+
 if __name__ == '__main__':
     
     keyboard.go()
     
+
